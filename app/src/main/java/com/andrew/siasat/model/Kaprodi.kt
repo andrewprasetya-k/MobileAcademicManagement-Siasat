@@ -1,9 +1,8 @@
 package com.andrew.siasat.model
 
 data class Kaprodi(
-    val id: String,
-    val nama: String,
-    val nidn: String,
-    val email: String,
-    val prodi: String
+    val id: String = "",
+    val kodeKaprodi: String = "",
+    val nama: String = "",
+    val departemen: String = ""
 )

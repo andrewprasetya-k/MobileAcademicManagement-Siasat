@@ -30,7 +30,7 @@ class DosenMainActivity : AppCompatActivity() {
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val dosen = snapshot.getValue(User::class.java)
-                    binding.tvWelcome.text = "Selamat datang, ${dosen?.nama ?: "Dosen"}"
+                    binding.tvWelcome.text = "Selamat datang, ${dosen?.username ?: "Dosen"}"
                 }
 
                 override fun onCancelled(error: DatabaseError) {

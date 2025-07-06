@@ -1,13 +1,14 @@
 package com.andrew.siasat.model
 
+// Mahasiswa.kt
 data class Mahasiswa(
-    val id: String,
-    val nama: String,
-    val nim: String,
-    val prodi: String,
-    val semester: Int,
-    val ipk: Double,
-    val totalSks: Int,
-    val status: String, // Aktif / Cuti / Nonaktif
-    val poinKkm: Int
+    val id: String = "",
+    val nim: String = "",
+    val nama: String = "",
+    val prodi: String = "",
+    val semester: Int = 1,
+    val ipk: Double = 0.0,
+    val sksTotal: Int = 0,
+    val sksMaks: Int = 0,
+    val status: String = ""  // "Aktif", "Non-Aktif"
 )

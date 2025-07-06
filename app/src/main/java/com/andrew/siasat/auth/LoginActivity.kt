@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.andrew.siasat.R
 import com.andrew.siasat.databinding.ActivityLoginBinding
 import com.andrew.siasat.dosen.DosenMainActivity
 import com.andrew.siasat.kaprodi.KaprodiMainActivity
@@ -14,18 +16,19 @@ import com.andrew.siasat.utils.Validator
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import androidx.core.content.ContextCompat
 
 class LoginActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        window.statusBarColor = ContextCompat.getColor(this, com.andrew.siasat.R.color.primaryDark)
-        setupClickListeners()
 
+        window.statusBarColor = ContextCompat.getColor(this, R.color.primaryDark)
+
+        setupClickListeners()
     }
 
     private fun setupClickListeners() {
@@ -41,11 +44,12 @@ class LoginActivity : AppCompatActivity() {
         val username = binding.etUsername.text.toString().trim()
         val password = binding.etPassword.text.toString().trim()
 
-        when {
-            !validateInput(username, password) -> return
-            Validator.isDosenIdValid(username) -> authenticateUser(username, password)
-            Validator.isMahasiswaIdValid(username) -> authenticateUser(username, password)
-            else -> showError("Format username tidak valid")
+        if (!validateInput(username, password)) return
+
+        if (Validator.isMahasiswaIdValid(username) || Validator.isDosenIdValid(username)) {
+            authenticateUser(username, password)
+        } else {
+            showError("Format username tidak valid")
         }
     }
 
@@ -65,50 +69,46 @@ class LoginActivity : AppCompatActivity() {
         return isValid
     }
 
-    private fun authenticateUser(username: String, password: String) {
-        FirebaseUtils.database.child(FirebaseUtils.USERS_PATH).child(username)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (!snapshot.exists()) {
-                        showError("User tidak ditemukan")
-                        return
-                    }
+    private fun authenticateUser(userId: String, password: String) {
+        val userRef = FirebaseUtils.database.child(FirebaseUtils.USERS_PATH).child(userId)
 
-                    val user = snapshot.getValue(User::class.java) ?: run {
-                        showError("Data user tidak valid")
-                        return
-                    }
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
 
-                    if (user.password != password) {
-                        showError("Password salah")
-                        return
-                    }
-
-                    redirectToRoleSpecificScreen(user)
+                if (user == null) {
+                    showError("User tidak ditemukan")
+                    return
                 }
 
-                override fun onCancelled(error: DatabaseError) {
-                    showError("Error: ${error.message}")
+                if (user.password != password) {
+                    showError("Password salah")
+                    return
                 }
-            })
+
+                redirectToRoleSpecificScreen(user)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                showError("Gagal memuat data: ${error.message}")
+            }
+        })
     }
 
     private fun redirectToRoleSpecificScreen(user: User) {
-        val targetActivity = when (user.role) {
-            "kaprodi" -> DosenMainActivity::class.java
-            "dosen" -> DosenMainActivity::class.java
-            "mahasiswa" -> MahasiswaMainActivity::class.java
+        val intent = when (user.role) {
+            "mahasiswa" -> Intent(this, MahasiswaMainActivity::class.java)
+            "dosen" -> Intent(this, DosenMainActivity::class.java)
+            "kaprodi" -> Intent(this, DosenMainActivity::class.java)
             else -> {
                 showError("Role tidak dikenali")
                 return
             }
         }
 
-        Intent(this, targetActivity).apply {
-            putExtra("USER_ID", user.id)
-            startActivity(this)
-            finish()
-        }
+        intent.putExtra("USER_ID", user.id)
+        startActivity(intent)
+        finish()
     }
 
     private fun showError(message: String) {

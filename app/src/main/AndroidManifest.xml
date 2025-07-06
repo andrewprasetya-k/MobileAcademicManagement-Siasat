@@ -15,8 +15,12 @@
         <!-- Main Launcher Activity -->
         <activity
             android:name=".auth.LoginActivity"
-            android:exported="false"
+            android:exported="true"
             android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!-- Kaprodi Activities -->
@@ -39,12 +43,8 @@
         <!-- Mahasiswa Activities -->
         <activity
             android:name=".mahasiswa.MahasiswaMainActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="Mahasiswa Dashboard">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
         </activity>
 
         <!-- Remove this if not needed -->
