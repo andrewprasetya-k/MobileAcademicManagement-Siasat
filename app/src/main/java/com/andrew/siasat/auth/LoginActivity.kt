@@ -15,7 +15,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import androidx.core.content.ContextCompat
-import com.andrew.siasat.R.color.primaryDark
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding

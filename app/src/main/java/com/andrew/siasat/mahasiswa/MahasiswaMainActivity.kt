@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.andrew.siasat.auth.LoginActivity
 import com.andrew.siasat.databinding.ActivityMahasiswaMainBinding
 import com.google.android.material.navigation.NavigationBarView
@@ -15,6 +16,7 @@ class MahasiswaMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMahasiswaMainBinding.inflate(layoutInflater)
+        window.statusBarColor = ContextCompat.getColor(this, com.andrew.siasat.R.color.primaryDark)
         setContentView(binding.root)
 
         setupUI()
