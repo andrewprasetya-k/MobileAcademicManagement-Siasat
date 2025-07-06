@@ -1,39 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
+    android:background="#FAFAFA"
+    android:padding="24dp"
     tools:context=".kaprodi.KaprodiMainActivity">
 
-    <TextView
-        android:id="@+id/tvWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Selamat datang, Kaprodi"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btnAddMatakuliah"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Tambah Mata Kuliah" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnAddTranskrip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Tambah Transkrip" />
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Halo, Kaprodi 👩‍💼"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#1E3A8A"
+            android:layout_marginBottom="8dp" />
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Logout" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvKaprodiName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama: Ibu Sari M.Kom"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvKaprodiNip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NIP: 1987654321"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddMatakuliah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="➕ Tambah Mata Kuliah"
+                app:cornerRadius="5dp"
+                app:backgroundTint="#1E3A8A"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddTranskrip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📄 Tambah Transkrip"
+                app:cornerRadius="5dp"
+                app:backgroundTint="#1E3A8A"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="24dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🚪 Logout"
+                app:cornerRadius="5dp"
+                app:backgroundTint="#D32F2F"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

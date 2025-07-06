@@ -1,7 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.Siasat" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="bottomNavigationStyle">@style/CustomBottomNavigationView</item>
+    </style>
+
+    <style name="Theme.Siasat" parent="Base.Theme.Siasat" />
+
+    <style name="CustomBottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemActiveIndicatorStyle">@style/CustomActiveIndicator</item>
+    </style>
+
+    <style name="CustomActiveIndicator">
+        <item name="android:background">@android:color/transparent</item> <!-- Ini kunci hilangkan oval -->
     </style>
 </resources>

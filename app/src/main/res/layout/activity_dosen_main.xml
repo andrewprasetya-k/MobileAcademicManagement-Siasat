@@ -1,46 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
+    android:background="#FAFAFA"
+    android:padding="24dp"
     tools:context=".dosen.DosenMainActivity">
 
-    <TextView
-        android:id="@+id/tvWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Selamat datang, Dosen"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btnInputNilai"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Input Nilai" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnInputTranskrip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Input Transkrip" />
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Halo, Dosen 👨‍🏫"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#1E3A8A"
+            android:layout_marginBottom="8dp" />
 
-    <Button
-        android:id="@+id/btnLihatMataKuliah"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Lihat Mata Kuliah" />
+        <TextView
+            android:id="@+id/tvDosenName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama: Dr. Bambang S."
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="4dp"/>
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Logout" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvNidn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NIDN: 1234567890"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnInputNilai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📝 Input Nilai"
+                app:cornerRadius="5dp"
+                app:backgroundTint="#1E3A8A"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnInputTranskrip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📄 Input Transkrip"
+                app:cornerRadius="5dp"
+                app:backgroundTint="#1E3A8A"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLihatMataKuliah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📚 Lihat Mata Kuliah"
+                app:cornerRadius="5dp"
+                app:backgroundTint="#1E3A8A"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="24dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🚪 Logout"
+                app:cornerRadius="5dp"
+                app:backgroundTint="#D32F2F"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

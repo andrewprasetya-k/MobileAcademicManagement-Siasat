@@ -1,39 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
+    android:background="#FAFAFA"
     tools:context=".mahasiswa.MahasiswaMainActivity">
 
-    <TextView
-        android:id="@+id/tvWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Selamat datang, Mahasiswa"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+    <ScrollView
+        android:id="@+id/scrollViewContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomNavigationView"
+        android:padding="24dp">
 
-    <Button
-        android:id="@+id/btnLihatNilai"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Halo, Andrew 👋"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#1E3A8A"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/tvNim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NIM: 672022007"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/tvProdiSemester"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Teknik Informatika - Semester 3 (2024/2025)"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/tvSksMaks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Beban SKS Maks: 20"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="16dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="24dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/tvIpk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3.75"
+                        android:textColor="#1E3A8A"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="IPK"
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/tvSksTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="110"
+                        android:textColor="#1E3A8A"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total SKS"
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/tvStatusAktif"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Aktif"
+                        android:textColor="#1E3A8A"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status"
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="3"
+                android:layout_marginBottom="24dp"
+                android:alignmentMode="alignMargins"
+                android:columnOrderPreserved="false">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLihatKrs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="📄 Kartu Studi"
+                    app:cornerRadius="5dp"
+                    app:backgroundTint="#1E3A8A"
+                    android:textColor="#FFFFFF"
+                    android:layout_margin="8dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLihatNilai"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="📊 Lihat Nilai"
+                    app:cornerRadius="5dp"
+                    app:backgroundTint="#1E3A8A"
+                    android:textColor="#FFFFFF"
+                    android:layout_margin="8dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLihatTranskrip"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="🎓 Lihat Transkrip"
+                    app:cornerRadius="5dp"
+                    app:backgroundTint="#1E3A8A"
+                    android:textColor="#FFFFFF"
+                    android:layout_margin="8dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnJadwalKuliah"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="📅 Jadwal Kuliah"
+                    app:cornerRadius="5dp"
+                    app:backgroundTint="#1E3A8A"
+                    android:textColor="#FFFFFF"
+                    android:layout_margin="8dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnTagihan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="💳 Tagihan"
+                    app:cornerRadius="5dp"
+                    app:backgroundTint="#1E3A8A"
+                    android:textColor="#FFFFFF"
+                    android:layout_margin="8dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnKeaktifanMahasiswa"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="✅ Poin KKM"
+                    app:cornerRadius="5dp"
+                    app:backgroundTint="#1E3A8A"
+                    android:textColor="#FFFFFF"
+                    android:layout_margin="8dp"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnHasilStudi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="💯 Hasil Studi"
+                    app:cornerRadius="5dp"
+                    app:backgroundTint="#1E3A8A"
+                    android:textColor="#FFFFFF"
+                    android:layout_margin="8dp"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPerwalian"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="👨‍🏫 Perwalian"
+                    app:cornerRadius="5dp"
+                    app:backgroundTint="#1E3A8A"
+                    android:textColor="#FFFFFF"
+                    android:layout_margin="8dp"/>
+
+            </GridLayout>
+
+        </LinearLayout>
+    </ScrollView>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Lihat Nilai" />
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
+        app:itemBackground="@drawable/nav_item_background"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu" />
 
-    <Button
-        android:id="@+id/btnLihatTranskrip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Lihat Transkrip" />
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Logout" />
-</LinearLayout>
+</RelativeLayout>
