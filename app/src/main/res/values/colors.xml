@@ -2,4 +2,20 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="backgroundColor">#FAFAFA</color>
+
+    <!-- Primary Colors -->
+    <color name="primaryColor">#3B82F6</color>        <!-- Biru soft untuk tombol -->
+    <color name="primaryDark">#1E3A8A</color>         <!-- Biru gelap untuk status bar -->
+
+    <!-- Text Colors -->
+    <color name="textPrimary">#1E3A8A</color>         <!-- Judul -->
+    <color name="textSecondary">#757575</color>       <!-- Subjudul dan teks pendukung -->
+    <color name="textOnPrimary">#FFFFFF</color>       <!-- Teks putih di atas tombol biru -->
+
+    <!-- Border & Stroke Colors -->
+    <color name="buttonStroke">#90CAF9</color>        <!-- Outline button -->
+
+    <!-- Optional: Error / Accent -->
+    <color name="errorColor">#EF4444</color>          <!-- Merah lembut untuk error -->
 </resources>
