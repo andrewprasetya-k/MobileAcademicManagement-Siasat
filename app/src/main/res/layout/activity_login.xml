@@ -14,7 +14,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sistem Akademik"
+        android:text="SIASAT UKSW"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="#1E3A8A"
@@ -36,39 +36,48 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#FFFFFF"
-        app:startIconDrawable="@drawable/ic_person">
+        app:startIconDrawable="@drawable/ic_person"
+        app:boxStrokeColor="#333333"
+        app:hintTextColor="#333333">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"
+            android:textColor="#222222"
+            android:textSize="15sp"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:backgroundTint="#FFFFFF"
-        app:startIconDrawable="@drawable/ic_lock">
+        app:startIconDrawable="@drawable/ic_lock"
+        app:boxStrokeColor="#333333"
+        app:hintTextColor="#333333">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
+            android:textColor="#222222"
+            android:textSize="15sp"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:text="Login"
-        android:textSize="16sp"
+        android:textSize="15sp"
         android:textStyle="bold"
-        app:cornerRadius="12dp"
-        app:backgroundTint="#3B82F6"
+        app:cornerRadius="0dp"
+        app:backgroundTint="#1E3A8A"
         android:textColor="@android:color/white"
         app:elevation="0dp"
         android:layout_marginBottom="12dp"/>
@@ -76,13 +85,13 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnKaprodiLogin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:text="Login sebagai Kaprodi"
-        android:textSize="16sp"
+        android:textSize="15sp"
         android:textStyle="bold"
-        app:cornerRadius="12dp"
-        app:strokeColor="#90CAF9"
+        app:cornerRadius="0dp"
+        app:strokeColor="#333333"
         app:backgroundTint="#FAFAFA"
-        android:textColor="#1E3A8A"
+        android:textColor="#333333"
         app:elevation="0dp"/>
 </LinearLayout>
