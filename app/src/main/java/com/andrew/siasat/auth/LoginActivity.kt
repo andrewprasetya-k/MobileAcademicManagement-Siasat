@@ -97,7 +97,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun redirectToRoleSpecificScreen(user: User) {
         val intent = when (user.role) {
-            "mahasiswa" -> Intent(this, MahasiswaMainActivity::class.java)
+            "mahasiswa" -> Intent(this, MahasiswaMainActivity::class.java).apply {
+                putExtra("USER_ID", user.id)
+                putExtra("USER_NAMA", user.nama)
+                startActivity(this)
+                finish()
+            }
             "dosen" -> Intent(this, DosenMainActivity::class.java)
             "kaprodi" -> Intent(this, DosenMainActivity::class.java)
             else -> {

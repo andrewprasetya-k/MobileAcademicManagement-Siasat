@@ -10,7 +10,9 @@ object FirebaseUtils {
 
     // Reference paths
     const val USERS_PATH = "users"
-    const val MATA_KULIAH_PATH = "mata_kuliah"
-    const val NILAI_PATH = "nilai"
-    const val TRANSKRIP_PATH = "transkrip"
+    const val MATAKULIAH_PATH = "matakuliahs"
+    const val KARTU_STUDI_PATH = "kartustudis"
+    const val DOSEN_PATH = "dosens"
+    const val NILAI_PATH = "nilais"
+    const val TRANSKRIP_PATH = "transkrips"
 }

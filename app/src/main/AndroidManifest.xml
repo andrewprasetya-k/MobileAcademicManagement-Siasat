@@ -41,11 +41,27 @@
             android:label="Dosen Dashboard"/>
 
         <!-- Mahasiswa Activities -->
+        <!-- Mahasiswa Activities -->
         <activity
             android:name=".mahasiswa.MahasiswaMainActivity"
             android:exported="false"
             android:label="Mahasiswa Dashboard">
         </activity>
+
+        <activity
+            android:name=".mahasiswa.LihatNilaiActivity"
+            android:exported="false"
+            android:label="Lihat Nilai" />
+
+        <activity
+            android:name=".mahasiswa.LihatKstActivity"
+            android:exported="false"
+            android:label="Lihat KST" />
+
+        <activity android:name=".mahasiswa.LihatTranskripActivity"
+            android:exported="false"
+            android:label="Lihat Transkrip" />
+
 
         <!-- Remove this if not needed -->
         <activity
