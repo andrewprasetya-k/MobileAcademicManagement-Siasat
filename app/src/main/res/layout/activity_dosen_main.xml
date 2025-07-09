@@ -57,24 +57,14 @@
                 android:layout_marginBottom="12dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnInputTranskrip"
+                android:id="@+id/btnLihatMatkul"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="📄 Input Transkrip"
+                android:text="📄 Lihat Mata Kuliah"
                 app:cornerRadius="5dp"
                 app:backgroundTint="#1E3A8A"
                 android:textColor="#FFFFFF"
                 android:layout_marginBottom="12dp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLihatMataKuliah"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="📚 Lihat Mata Kuliah"
-                app:cornerRadius="5dp"
-                app:backgroundTint="#1E3A8A"
-                android:textColor="#FFFFFF"
-                android:layout_marginBottom="24dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"

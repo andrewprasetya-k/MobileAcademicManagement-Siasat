@@ -62,6 +62,14 @@
             android:exported="false"
             android:label="Lihat Transkrip" />
 
+        <activity android:name=".dosen.InputNilaiActivity"
+            android:exported="false"
+            android:label="Input Nilai" />
+
+        <activity android:name=".dosen.LihatMatkulActivity"
+            android:exported="false"
+            android:label="Input Nilai" />
+
 
         <!-- Remove this if not needed -->
         <activity

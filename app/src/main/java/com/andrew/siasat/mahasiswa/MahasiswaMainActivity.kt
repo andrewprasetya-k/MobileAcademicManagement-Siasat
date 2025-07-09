@@ -118,6 +118,15 @@ class MahasiswaMainActivity : AppCompatActivity() {
         binding.btnPerwalian.setOnClickListener {
             Toast.makeText(this, "Menu Perwalian dibuka", Toast.LENGTH_SHORT).show()
         }
+
+        binding.btnLogout.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            Toast.makeText(this, "Logout berhasil", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+
     }
 
     private fun setupBottomNav() {

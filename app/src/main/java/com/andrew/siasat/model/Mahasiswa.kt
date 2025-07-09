@@ -10,5 +10,6 @@ data class Mahasiswa(
     val ipk: Double = 0.0,
     val sksTotal: Int = 0,
     val sksMaks: Int = 0,
+    val krsId: String = "",
     val status: String = ""  // "Aktif", "Non-Aktif"
 )
