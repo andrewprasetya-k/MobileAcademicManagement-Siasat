@@ -29,12 +29,12 @@ class TranskripAdapter(
 
         val nilaiAngka = nilai.nilai
         val hurufMutu = when {
-            nilaiAngka >= 80 -> "A"
-            nilaiAngka >= 75 -> "AB"
-            nilaiAngka >= 70 -> "B"
-            nilaiAngka >= 65 -> "BC"
-            nilaiAngka >= 60 -> "C"
-            nilaiAngka >= 50 -> "D"
+            nilaiAngka >= 4.0 -> "A"
+            nilaiAngka >= 3.5 -> "AB"
+            nilaiAngka >= 3.0 -> "B"
+            nilaiAngka >= 2.5 -> "BC"
+            nilaiAngka >= 2.0 -> "C"
+            nilaiAngka >= 1.0 -> "D"
             else -> "E"
         }
 

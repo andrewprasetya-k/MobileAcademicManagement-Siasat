@@ -81,7 +81,7 @@ class LihatTranskripActivity : AppCompatActivity() {
 
                             val matkul = matkulMap[nilai.matakuliahId]
                             val sks = matkul?.sks ?: 0
-                            val bobot = getBobot(nilai.nilai)
+                            val bobot = nilai.nilai  // Langsung ambil bobot tanpa konversi
 
                             totalSks += sks
                             totalBobot += bobot * sks
@@ -100,17 +100,5 @@ class LihatTranskripActivity : AppCompatActivity() {
                     Toast.makeText(this@LihatTranskripActivity, "Gagal memuat data", Toast.LENGTH_SHORT).show()
                 }
             })
-    }
-
-    private fun getBobot(nilaiAngka: Double): Double {
-        return when {
-            nilaiAngka >= 80 -> 4.0      // A
-            nilaiAngka >= 75 -> 3.5      // AB
-            nilaiAngka >= 70 -> 3.0      // B
-            nilaiAngka >= 65 -> 2.5      // BC
-            nilaiAngka >= 60 -> 2.0      // C
-            nilaiAngka >= 50 -> 1.5      // D
-            else -> 0.0                  // E
-        }
     }
 }

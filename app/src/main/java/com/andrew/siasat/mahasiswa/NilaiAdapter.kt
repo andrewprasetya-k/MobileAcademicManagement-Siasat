@@ -20,8 +20,21 @@ class NilaiAdapter(
 
     override fun onBindViewHolder(holder: NilaiViewHolder, position: Int) {
         val nilai = nilaiList[position]
-        holder.binding.tvMatakuliah.text = matkulMap[nilai.matakuliahId] ?: "-"
-        holder.binding.tvNilaiAngka.text = nilai.nilai.toString()
+        val matkulNama = matkulMap[nilai.matakuliahId] ?: "Matkul Tidak Dikenal"
+
+        val nilaiHuruf = when (nilai.nilai) {
+            4.0 -> "A"
+            3.5 -> "AB"
+            3.0 -> "B"
+            2.5 -> "BC"
+            2.0 -> "C"
+            1.5 -> "D"
+            0.0 -> "E"
+            else -> "Belum dinilai"
+        }
+
+        holder.binding.tvMatakuliah.text = matkulNama
+        holder.binding.tvNilaiAngka.text = nilaiHuruf
     }
 
     override fun getItemCount(): Int = nilaiList.size

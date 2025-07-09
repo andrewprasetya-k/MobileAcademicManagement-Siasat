@@ -57,27 +57,40 @@ class LihatMatkulActivity : AppCompatActivity() {
                         FirebaseUtils.database.child("kartustudis")
                             .addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onDataChange(krsSnapshot: DataSnapshot) {
-                                    val mahasiswaList = mutableListOf<String>()
+                                    val mahasiswaIds = mutableSetOf<String>()
 
                                     krsSnapshot.children.forEach { krs ->
                                         val mkList = krs.child("matakuliahIds").children.mapNotNull { it.getValue(String::class.java) }
                                         if (mkList.contains(matkulId)) {
                                             val mahasiswaId = krs.child("mahasiswaId").getValue(String::class.java) ?: ""
-                                            mahasiswaList.add(mahasiswaId)
+                                            mahasiswaIds.add(mahasiswaId)
                                         }
                                     }
 
-                                    if (mahasiswaList.isEmpty()) {
+                                    if (mahasiswaIds.isEmpty()) {
                                         matkulData.add("$matkulId:\n  Tidak ada mahasiswa terdaftar.")
                                         updateListView()
                                         return
                                     }
 
-                                    mahasiswaList.forEach { mhsId ->
+                                    val mahasiswaDataList = mutableListOf<String>()
+                                    val mahasiswaIterator = mahasiswaIds.iterator()
+
+                                    fun processNextMahasiswa() {
+                                        if (!mahasiswaIterator.hasNext()) {
+                                            val combinedData = "$matkulId:\n" + mahasiswaDataList.joinToString("\n") { "  $it" }
+                                            matkulData.add(combinedData)
+                                            updateListView()
+                                            return
+                                        }
+
+                                        val mhsId = mahasiswaIterator.next()
+
                                         FirebaseUtils.database.child("users").child(mhsId)
                                             .addListenerForSingleValueEvent(object : ValueEventListener {
                                                 override fun onDataChange(userSnapshot: DataSnapshot) {
                                                     val nama = userSnapshot.child("nama").getValue(String::class.java) ?: "Tanpa Nama"
+                                                    val nim = userSnapshot.child("id").getValue(String::class.java) ?: mhsId
 
                                                     FirebaseUtils.database.child("nilais")
                                                         .orderByChild("mahasiswaId").equalTo(mhsId)
@@ -91,17 +104,23 @@ class LihatMatkulActivity : AppCompatActivity() {
                                                                         nilaiHuruf = konversiNilai(nilai)
                                                                     }
                                                                 }
-                                                                matkulData.add("$matkulId:\n  $mhsId - $nama : $nilaiHuruf")
-                                                                updateListView()
+                                                                mahasiswaDataList.add("$nim - $nama : $nilaiHuruf")
+                                                                processNextMahasiswa()
                                                             }
 
-                                                            override fun onCancelled(error: DatabaseError) {}
+                                                            override fun onCancelled(error: DatabaseError) {
+                                                                processNextMahasiswa()
+                                                            }
                                                         })
                                                 }
 
-                                                override fun onCancelled(error: DatabaseError) {}
+                                                override fun onCancelled(error: DatabaseError) {
+                                                    processNextMahasiswa()
+                                                }
                                             })
                                     }
+
+                                    processNextMahasiswa()
                                 }
 
                                 override fun onCancelled(error: DatabaseError) {}

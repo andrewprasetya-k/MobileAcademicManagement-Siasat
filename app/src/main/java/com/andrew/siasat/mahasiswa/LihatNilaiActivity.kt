@@ -60,17 +60,65 @@ class LihatNilaiActivity : AppCompatActivity() {
     }
 
     private fun loadNilai(mahasiswaId: String) {
-        FirebaseUtils.database.child(FirebaseUtils.NILAI_PATH)
+        binding.progressBar.visibility = View.VISIBLE
+
+        // Ambil Kartu Studi Mahasiswa
+        FirebaseUtils.database.child("kartustudis")
             .orderByChild("mahasiswaId").equalTo(mahasiswaId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
+                override fun onDataChange(krsSnapshot: DataSnapshot) {
                     nilaiList.clear()
-                    for (data in snapshot.children) {
-                        val nilai = data.getValue(Nilai::class.java)
-                        nilai?.let { nilaiList.add(it) }
+
+                    if (!krsSnapshot.exists()) {
+                        binding.progressBar.visibility = View.GONE
+                        adapter.notifyDataSetChanged()
+                        return
                     }
-                    binding.progressBar.visibility = View.GONE
-                    adapter.notifyDataSetChanged()
+
+                    val matkulIds = krsSnapshot.children.flatMap { krs ->
+                        krs.child("matakuliahIds").children.mapNotNull { it.getValue(String::class.java) }
+                    }.toSet()
+
+                    if (matkulIds.isEmpty()) {
+                        binding.progressBar.visibility = View.GONE
+                        adapter.notifyDataSetChanged()
+                        return
+                    }
+
+                    // Ambil Semua Nilai Mahasiswa
+                    FirebaseUtils.database.child(FirebaseUtils.NILAI_PATH)
+                        .orderByChild("mahasiswaId").equalTo(mahasiswaId)
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(nilaiSnapshot: DataSnapshot) {
+                                val nilaiMap = mutableMapOf<String, Double?>()
+
+                                nilaiSnapshot.children.forEach { n ->
+                                    val mkId = n.child("matakuliahId").getValue(String::class.java)
+                                    val nilai = n.child("nilai").getValue(Double::class.java)
+                                    if (mkId != null) {
+                                        nilaiMap[mkId] = nilai
+                                    }
+                                }
+
+                                matkulIds.forEach { mkId ->
+                                    val nilaiAngka = nilaiMap[mkId]
+                                    val nilaiObj = Nilai(
+                                        mahasiswaId = mahasiswaId,
+                                        matakuliahId = mkId,
+                                        nilai = nilaiAngka ?: -1.0  // Pakai -1.0 sbg penanda “Belum dinilai”
+                                    )
+                                    nilaiList.add(nilaiObj)
+                                }
+
+                                binding.progressBar.visibility = View.GONE
+                                adapter.notifyDataSetChanged()
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                binding.progressBar.visibility = View.GONE
+                                Toast.makeText(this@LihatNilaiActivity, "Gagal memuat data", Toast.LENGTH_SHORT).show()
+                            }
+                        })
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -79,4 +127,5 @@ class LihatNilaiActivity : AppCompatActivity() {
                 }
             })
     }
+
 }
