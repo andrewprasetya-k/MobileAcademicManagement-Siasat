@@ -1,83 +1,117 @@
 package com.andrew.siasat.kaprodi
-//
-//import android.os.Bundle
-//import android.widget.Toast
-//import androidx.appcompat.app.AppCompatActivity
-//import com.andrew.siasat.databinding.ActivityAddMataKuliahBinding
-//import com.andrew.siasat.model.MataKuliah
-//import com.andrew.siasat.utils.FirebaseUtils
-//import com.google.firebase.database.DatabaseReference
-//
-//class AddMataKuliahActivity : AppCompatActivity() {
-//    private lateinit var binding: ActivityAddMataKuliahBinding
-//    private lateinit var database: DatabaseReference
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        binding = ActivityAddMataKuliahBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-//        database = FirebaseUtils.database
-//
-//        binding.btnSimpan.setOnClickListener {
-//            val kode = binding.etKode.text.toString().trim()
-//            val nama = binding.etNama.text.toString().trim()
-//            val sks = binding.etSks.text.toString().trim()
-//            val semester = binding.etSemester.text.toString().trim()
-//            val dosenPengampu = binding.etDosenPengampu.text.toString().trim()
-//
-//            if (validateInput(kode, nama, sks, semester, dosenPengampu)) {
-//                val mataKuliah = MataKuliah(
-//                    kode = kode,
-//                    nama = nama,
-//                    sks = sks.toInt(),
-//                    semester = semester.toInt(),
-//                    dosenPengampu = dosenPengampu
-//                )
-//
-//                saveMataKuliah(mataKuliah)
-//            }
-//        }
-//    }
-//
-//    private fun validateInput(
-//        kode: String,
-//        nama: String,
-//        sks: String,
-//        semester: String,
-//        dosen: String
-//    ): Boolean {
-//        if (kode.isEmpty()) {
-//            binding.etKode.error = "Kode tidak boleh kosong"
-//            return false
-//        }
-//        if (nama.isEmpty()) {
-//            binding.etNama.error = "Nama tidak boleh kosong"
-//            return false
-//        }
-//        if (sks.isEmpty() || !sks.matches(Regex("\\d+"))) {
-//            binding.etSks.error = "SKS harus angka"
-//            return false
-//        }
-//        if (semester.isEmpty() || !semester.matches(Regex("\\d+"))) {
-//            binding.etSemester.error = "Semester harus angka"
-//            return false
-//        }
-//        if (dosen.isEmpty() || !dosen.matches(Regex("67\\d{3}"))) {
-//            binding.etDosenPengampu.error = "Kode dosen tidak valid"
-//            return false
-//        }
-//        return true
-//    }
-//
-//    private fun saveMataKuliah(mataKuliah: MataKuliah) {
-//        database.child(FirebaseUtils.MATA_KULIAH_PATH).child(mataKuliah.kode)
-//            .setValue(mataKuliah)
-//            .addOnSuccessListener {
-//                Toast.makeText(this, "Mata kuliah berhasil disimpan", Toast.LENGTH_SHORT).show()
-//                finish()
-//            }
-//            .addOnFailureListener {
-//                Toast.makeText(this, "Gagal menyimpan: ${it.message}", Toast.LENGTH_SHORT).show()
-//            }
-//    }
-//}
+
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.andrew.siasat.databinding.ActivityAddMatakuliahBinding
+import com.andrew.siasat.model.Matakuliah
+import com.andrew.siasat.utils.FirebaseUtils
+import com.google.firebase.database.DatabaseReference
+
+class TambahMatkulActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityAddMatakuliahBinding
+    private lateinit var database: DatabaseReference
+    private val dosenList = mutableListOf<String>()
+    private val dosenIdMap = mutableMapOf<String, String>() // Untuk mapping nama ke ID
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityAddMatakuliahBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        database = FirebaseUtils.database
+
+        loadDosenToSpinner()
+
+        binding.btnSimpanMatkul.setOnClickListener {
+            simpanMatakuliah()
+        }
+    }
+
+    private fun loadDosenToSpinner() {
+        database.child("dosens")
+            .get()
+            .addOnSuccessListener { snapshot ->
+                dosenList.clear()
+                dosenIdMap.clear()
+
+                dosenList.add("Pilih Dosen")
+                snapshot.children.forEach { userSnapshot ->
+                    val id = userSnapshot.key ?: return@forEach
+                    val nama = userSnapshot.child("nama").getValue(String::class.java) ?: "Tanpa Nama"
+                    dosenList.add("$id - $nama")
+                    dosenIdMap["$id - $nama"] = id
+                }
+
+                val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, dosenList)
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.spinnerDosen.adapter = adapter
+            }
+            .addOnFailureListener { error ->
+                Toast.makeText(this, "Gagal memuat data dosen: ${error.message}", Toast.LENGTH_LONG).show()
+            }
+
+    }
+
+    private fun simpanMatakuliah() {
+        val kode = binding.etKodeMatkul.text.toString().trim()
+        val nama = binding.etNamaMatkul.text.toString().trim()
+        val sksStr = binding.etSksMatkul.text.toString().trim()
+        val semesterStr = binding.etSemesterMatkul.text.toString().trim()
+        val dosenSelected = binding.spinnerDosen.selectedItem.toString()
+
+        if (kode.isEmpty() || nama.isEmpty() || sksStr.isEmpty() || semesterStr.isEmpty() || dosenSelected == "Pilih Dosen") {
+            Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val sks = sksStr.toIntOrNull()
+        val semester = semesterStr.toIntOrNull()
+        val dosenId = dosenIdMap[dosenSelected]
+
+        if (sks == null || semester == null || dosenId == null) {
+            Toast.makeText(this, "Input tidak valid", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val matkulId = kode
+        val matakuliah = Matakuliah(
+            id = matkulId,
+            kode = kode,
+            nama = nama,
+            sks = sks,
+            semester = semester,
+            dosenId = dosenId
+        )
+
+        database.child("matakuliahs").child(matkulId).setValue(matakuliah)
+            .addOnSuccessListener {
+                // Tambahkan ke jadwals secara otomatis
+                val jadwalId = "jadwal_$matkulId"
+                val jadwalData = mapOf(
+                    "id" to jadwalId,
+                    "matakuliahId" to matkulId,
+                    "namaMatakuliah" to nama,
+                    "dosenId" to dosenId,
+                    "hari" to "-",          // Default kosong, bisa diedit nanti
+                    "jam" to "-",
+                    "ruangan" to "-"
+                )
+
+                database.child("jadwals").child(jadwalId).setValue(jadwalData)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Mata kuliah & jadwal berhasil disimpan", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Mata kuliah disimpan, tapi gagal membuat jadwal", Toast.LENGTH_SHORT).show()
+                    }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Gagal menyimpan data matakuliah", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+}

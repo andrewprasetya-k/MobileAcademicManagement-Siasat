@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".kaprodi.AddMatakuliahActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FAFAFA"
+    android:padding="24dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,81 +14,91 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:text="Tambah Mata Kuliah"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#1E3A8A"
+            android:layout_marginBottom="16dp" />
 
+        <!-- Kode Mata Kuliah -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+            android:layout_marginBottom="12dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etKode"
+                android:id="@+id/etKodeMatkul"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Kode Mata Kuliah"
-                android:inputType="text" />
+                android:hint="Kode Mata Kuliah (contoh: IF1234)" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Nama Mata Kuliah -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:layout_marginBottom="12dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etNama"
+                android:id="@+id/etNamaMatkul"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nama Mata Kuliah"
-                android:inputType="text" />
+                android:hint="Nama Mata Kuliah" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Jumlah SKS -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:layout_marginBottom="12dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etSks"
+                android:id="@+id/etSksMatkul"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="SKS"
+                android:hint="Jumlah SKS"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Semester -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:layout_marginBottom="12dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etSemester"
+                android:id="@+id/etSemesterMatkul"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Semester"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <!-- Spinner Pilih Dosen -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pilih Dosen"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinnerDosen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:layout_marginBottom="16dp" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etDosenPengampu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Kode Dosen Pengampu"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/btnSimpan"
+        <!-- Button Simpan -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSimpanMatkul"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Simpan" />
+            android:text="💾 Simpan"
+            app:cornerRadius="5dp"
+            app:backgroundTint="#1E3A8A"
+            android:textColor="#FFFFFF" />
+
     </LinearLayout>
+
 </ScrollView>

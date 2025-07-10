@@ -30,7 +30,6 @@ class KstAdapter(private val matkulList: List<Matakuliah>) : RecyclerView.Adapte
         holder.tvMatkulKode.text = "Kode: ${matkul.kode}"
         holder.tvMatkulSks.text = "SKS: ${matkul.sks}"
         holder.tvMatkulSemester.text = "Semester: ${matkul.semester}"
-        holder.tvMatkulJadwal.text = "Jadwal: ${matkul.jadwal}"
         holder.tvMatkulDosen.text = "Dosen: ${matkul.dosenId}"
     }
 

@@ -34,13 +34,23 @@
             android:exported="false"
             android:label="Kaprodi Dashboard"/>
 
+        <activity android:name=".kaprodi.TambahMatkulActivity"
+            android:exported="false"
+            android:label="Tambah Mata Kuliah" />"
+
+        <activity android:name=".kaprodi.LihatMatkulKaprodiActivity"
+            android:exported="false"
+            android:label="Kaprodi Lihat Matkul" />"
+
         <!-- Dosen Activities -->
         <activity
             android:name=".dosen.DosenMainActivity"
             android:exported="false"
             android:label="Dosen Dashboard"/>
+        <activity android:name=".dosen.LihatMatkulActivity"
+            android:exported="false"
+            android:label="Input Nilai" />
 
-        <!-- Mahasiswa Activities -->
         <!-- Mahasiswa Activities -->
         <activity
             android:name=".mahasiswa.MahasiswaMainActivity"
@@ -65,11 +75,6 @@
         <activity android:name=".dosen.InputNilaiActivity"
             android:exported="false"
             android:label="Input Nilai" />
-
-        <activity android:name=".dosen.LihatMatkulActivity"
-            android:exported="false"
-            android:label="Input Nilai" />
-
 
         <!-- Remove this if not needed -->
         <activity

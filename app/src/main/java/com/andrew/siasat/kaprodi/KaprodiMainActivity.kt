@@ -4,11 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.andrew.siasat.databinding.ActivityKaprodiMainBinding
-import com.andrew.siasat.model.User
-import com.andrew.siasat.utils.FirebaseUtils
-
 import com.andrew.siasat.auth.LoginActivity
+import com.andrew.siasat.databinding.ActivityKaprodiMainBinding
+import com.andrew.siasat.model.Dosen
+import com.andrew.siasat.utils.FirebaseUtils
 
 class KaprodiMainActivity : AppCompatActivity() {
 
@@ -32,12 +31,14 @@ class KaprodiMainActivity : AppCompatActivity() {
     }
 
     private fun loadUserData() {
-        FirebaseUtils.database.child("users").child(userId)
+        FirebaseUtils.database.child("dosens").child(userId)
             .get()
             .addOnSuccessListener { snapshot ->
-                val user = snapshot.getValue(User::class.java)
+                val user = snapshot.getValue(Dosen::class.java)
                 if (user != null) {
-                    binding.tvWelcome.text = "Selamat datang, ${user.username} (Kaprodi)"
+                    binding.tvWelcome.text = "Halo, ${user.nama} "
+                    binding.tvKaprodiName.text = "Nama: ${user.nama}"
+                    binding.tvKaprodiNip.text = "NIP: ${user.id}"
                 } else {
                     Toast.makeText(this, "Data user tidak ditemukan", Toast.LENGTH_SHORT).show()
                 }
@@ -50,17 +51,18 @@ class KaprodiMainActivity : AppCompatActivity() {
     private fun setupButtons() {
         binding.apply {
             btnAddMatakuliah.setOnClickListener {
-                Toast.makeText(this@KaprodiMainActivity, "Menu Tambah Mata Kuliah dibuka", Toast.LENGTH_SHORT).show()
-                // startActivity(Intent(this@KaprodiMainActivity, AddMatakuliahActivity::class.java))
+                val intent = Intent(this@KaprodiMainActivity, TambahMatkulActivity::class.java)
+                intent.putExtra("USER_ID", userId)
+                startActivity(intent)
             }
 
-            btnAddTranskrip.setOnClickListener {
-                Toast.makeText(this@KaprodiMainActivity, "Menu Tambah Transkrip dibuka", Toast.LENGTH_SHORT).show()
-                // startActivity(Intent(this@KaprodiMainActivity, AddTranskripActivity::class.java))
+            btnViewMatakuliah.setOnClickListener {
+                val intent = Intent(this@KaprodiMainActivity, LihatMatkulKaprodiActivity::class.java)
+                intent.putExtra("USER_ID", userId)  // jika diperlukan di activity tujuan
+                startActivity(intent)
             }
 
             btnLogout.setOnClickListener {
-                Toast.makeText(this@KaprodiMainActivity, "Logout berhasil", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this@KaprodiMainActivity, LoginActivity::class.java))
                 finishAffinity()
             }

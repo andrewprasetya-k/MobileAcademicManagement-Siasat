@@ -12,69 +12,74 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Input Nilai"
+            android:text="📖 Lihat Mata Kuliah dan Nilai"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#1E3A8A"
             android:layout_marginBottom="16dp" />
 
-        <!-- Spinner Pilih Matakuliah -->
+        <!-- Pilih Dosen -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pilih Matakuliah"
+            android:text="Pilih Dosen"
             android:textSize="14sp"
             android:textColor="#666666"
             android:layout_marginBottom="4dp" />
 
         <Spinner
-            android:id="@+id/spinnerMatakuliah"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp" />
-
-        <!-- Spinner Pilih Mahasiswa -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pilih Mahasiswa"
-            android:textSize="14sp"
-            android:textColor="#666666"
-            android:layout_marginBottom="4dp" />
-
-        <Spinner
-            android:id="@+id/spinnerMahasiswa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp" />
-
-        <!-- Spinner Pilih Nilai -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pilih Nilai"
-            android:textSize="14sp"
-            android:textColor="#666666"
-            android:layout_marginBottom="4dp" />
-
-        <Spinner
-            android:id="@+id/spinnerNilai"
+            android:id="@+id/spinnerDosen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp" />
 
-        <!-- Button Simpan -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSimpan"
+        <!-- Pilih Mata Kuliah -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pilih Mata Kuliah"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinnerMatkul"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="💾 Simpan"
+            android:layout_marginBottom="16dp" />
+
+        <!-- List Mahasiswa & Nilai -->
+        <TextView
+            android:id="@+id/tvListTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daftar Mahasiswa dan Nilai"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="4dp" />
+
+        <ListView
+            android:id="@+id/listViewMahasiswa"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:divider="#CCCCCC"
+            android:dividerHeight="1dp"
+            android:background="#FFFFFF"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Tombol Kembali -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="⬅️ Kembali"
             app:cornerRadius="5dp"
             app:backgroundTint="#1E3A8A"
             android:textColor="#FFFFFF" />
 
     </LinearLayout>
-
 </ScrollView>

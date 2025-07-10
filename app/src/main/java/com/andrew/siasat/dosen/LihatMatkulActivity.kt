@@ -7,9 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.andrew.siasat.R
 import com.andrew.siasat.utils.FirebaseUtils
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 
 class LihatMatkulActivity : AppCompatActivity() {
 
@@ -29,106 +27,119 @@ class LihatMatkulActivity : AppCompatActivity() {
             return
         }
 
-        loadMatkulMahasiswaNilai()
+        loadMatakuliahDanMahasiswa()
     }
 
-    private fun loadMatkulMahasiswaNilai() {
-        FirebaseUtils.database.child("jadwals")
+    private fun loadMatakuliahDanMahasiswa() {
+        FirebaseUtils.database.child("matakuliahs")
             .orderByChild("dosenId").equalTo(dosenId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (!snapshot.exists()) {
+                override fun onDataChange(matkulSnapshot: DataSnapshot) {
+                    matkulData.clear()
+
+                    if (!matkulSnapshot.exists()) {
                         Toast.makeText(this@LihatMatkulActivity, "Tidak ada matakuliah", Toast.LENGTH_SHORT).show()
+                        updateListView()
                         return
                     }
 
-                    val matkulIds = mutableSetOf<String>()
-                    snapshot.children.forEach { jadwal ->
-                        val matkulId = jadwal.child("matakuliahId").getValue(String::class.java)
-                        matkulId?.let { matkulIds.add(it) }
+                    val matkulList = matkulSnapshot.children.toList()
+                    processNextMatkul(matkulList.iterator())
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@LihatMatkulActivity, "Gagal: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+
+    private fun processNextMatkul(iterator: Iterator<DataSnapshot>) {
+        if (!iterator.hasNext()) {
+            updateListView()
+            return
+        }
+
+        val matkulSnapshot = iterator.next()
+        val matkulId = matkulSnapshot.child("id").getValue(String::class.java) ?: ""
+        val kode = matkulSnapshot.child("kode").getValue(String::class.java) ?: "-"
+        val nama = matkulSnapshot.child("nama").getValue(String::class.java) ?: "-"
+        val sks = matkulSnapshot.child("sks").getValue(Int::class.java) ?: 0
+        val semester = matkulSnapshot.child("semester").getValue(Int::class.java) ?: 0
+
+        val matkulHeader = "$kode - $nama\nSKS: $sks | Semester: $semester"
+        val mahasiswaList = mutableListOf<String>()
+
+        // Ambil mahasiswa yang ambil matkul ini dari KRS
+        FirebaseUtils.database.child("kartustudis")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(krsSnapshot: DataSnapshot) {
+                    val mahasiswaIds = mutableSetOf<String>()
+                    krsSnapshot.children.forEach { krs ->
+                        val mkIds = krs.child("matakuliahIds").children.mapNotNull { it.getValue(String::class.java) }
+                        if (mkIds.contains(matkulId)) {
+                            krs.child("mahasiswaId").getValue(String::class.java)?.let { mahasiswaIds.add(it) }
+                        }
                     }
 
-                    if (matkulIds.isEmpty()) {
-                        Toast.makeText(this@LihatMatkulActivity, "Tidak ada matakuliah", Toast.LENGTH_SHORT).show()
+                    if (mahasiswaIds.isEmpty()) {
+                        matkulData.add("$matkulHeader\n  Tidak ada mahasiswa terdaftar.")
+                        processNextMatkul(iterator)
                         return
                     }
 
-                    matkulIds.forEach { matkulId ->
-                        FirebaseUtils.database.child("kartustudis")
-                            .addListenerForSingleValueEvent(object : ValueEventListener {
-                                override fun onDataChange(krsSnapshot: DataSnapshot) {
-                                    val mahasiswaIds = mutableSetOf<String>()
-
-                                    krsSnapshot.children.forEach { krs ->
-                                        val mkList = krs.child("matakuliahIds").children.mapNotNull { it.getValue(String::class.java) }
-                                        if (mkList.contains(matkulId)) {
-                                            val mahasiswaId = krs.child("mahasiswaId").getValue(String::class.java) ?: ""
-                                            mahasiswaIds.add(mahasiswaId)
-                                        }
-                                    }
-
-                                    if (mahasiswaIds.isEmpty()) {
-                                        matkulData.add("$matkulId:\n  Tidak ada mahasiswa terdaftar.")
-                                        updateListView()
-                                        return
-                                    }
-
-                                    val mahasiswaDataList = mutableListOf<String>()
-                                    val mahasiswaIterator = mahasiswaIds.iterator()
-
-                                    fun processNextMahasiswa() {
-                                        if (!mahasiswaIterator.hasNext()) {
-                                            val combinedData = "$matkulId:\n" + mahasiswaDataList.joinToString("\n") { "  $it" }
-                                            matkulData.add(combinedData)
-                                            updateListView()
-                                            return
-                                        }
-
-                                        val mhsId = mahasiswaIterator.next()
-
-                                        FirebaseUtils.database.child("users").child(mhsId)
-                                            .addListenerForSingleValueEvent(object : ValueEventListener {
-                                                override fun onDataChange(userSnapshot: DataSnapshot) {
-                                                    val nama = userSnapshot.child("nama").getValue(String::class.java) ?: "Tanpa Nama"
-                                                    val nim = userSnapshot.child("id").getValue(String::class.java) ?: mhsId
-
-                                                    FirebaseUtils.database.child("nilais")
-                                                        .orderByChild("mahasiswaId").equalTo(mhsId)
-                                                        .addListenerForSingleValueEvent(object : ValueEventListener {
-                                                            override fun onDataChange(nilaiSnapshot: DataSnapshot) {
-                                                                var nilaiHuruf = "Belum dinilai"
-                                                                nilaiSnapshot.children.forEach { n ->
-                                                                    val mkId = n.child("matakuliahId").getValue(String::class.java)
-                                                                    if (mkId == matkulId) {
-                                                                        val nilai = n.child("nilai").getValue(Double::class.java)
-                                                                        nilaiHuruf = konversiNilai(nilai)
-                                                                    }
-                                                                }
-                                                                mahasiswaDataList.add("$nim - $nama : $nilaiHuruf")
-                                                                processNextMahasiswa()
-                                                            }
-
-                                                            override fun onCancelled(error: DatabaseError) {
-                                                                processNextMahasiswa()
-                                                            }
-                                                        })
-                                                }
-
-                                                override fun onCancelled(error: DatabaseError) {
-                                                    processNextMahasiswa()
-                                                }
-                                            })
-                                    }
-
-                                    processNextMahasiswa()
-                                }
-
-                                override fun onCancelled(error: DatabaseError) {}
-                            })
+                    processNextMahasiswa(matkulId, mahasiswaIds.iterator(), mahasiswaList) {
+                        val combinedData = "$matkulHeader\n" + mahasiswaList.joinToString("\n") { "  $it" }
+                        matkulData.add(combinedData)
+                        processNextMatkul(iterator)
                     }
                 }
 
-                override fun onCancelled(error: DatabaseError) {}
+                override fun onCancelled(error: DatabaseError) {
+                    processNextMatkul(iterator)
+                }
+            })
+    }
+
+    private fun processNextMahasiswa(matkulId: String, iterator: Iterator<String>, resultList: MutableList<String>, onComplete: () -> Unit) {
+        if (!iterator.hasNext()) {
+            onComplete()
+            return
+        }
+
+        val mahasiswaId = iterator.next()
+
+        FirebaseUtils.database.child("users").child(mahasiswaId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(userSnapshot: DataSnapshot) {
+                    val nama = userSnapshot.child("nama").getValue(String::class.java) ?: "Tanpa Nama"
+                    val nim = userSnapshot.child("id").getValue(String::class.java) ?: mahasiswaId
+
+                    // Ambil nilai mahasiswa untuk matkul ini
+                    FirebaseUtils.database.child("nilais")
+                        .orderByChild("mahasiswaId").equalTo(mahasiswaId)
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(nilaiSnapshot: DataSnapshot) {
+                                var nilaiHuruf = "Belum dinilai"
+                                nilaiSnapshot.children.forEach { nilai ->
+                                    val mkId = nilai.child("matakuliahId").getValue(String::class.java)
+                                    if (mkId == matkulId) {
+                                        val nilaiAngka = nilai.child("nilai").getValue(Double::class.java)
+                                        nilaiHuruf = konversiNilai(nilaiAngka)
+                                    }
+                                }
+                                resultList.add("$nim - $nama : $nilaiHuruf")
+                                processNextMahasiswa(matkulId, iterator, resultList, onComplete)
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                processNextMahasiswa(matkulId, iterator, resultList, onComplete)
+                            }
+                        })
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    processNextMahasiswa(matkulId, iterator, resultList, onComplete)
+                }
             })
     }
 

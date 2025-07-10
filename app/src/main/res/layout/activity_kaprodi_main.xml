@@ -57,14 +57,14 @@
                 android:layout_marginBottom="12dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAddTranskrip"
+                android:id="@+id/btnViewMatakuliah"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="📄 Tambah Transkrip"
+                android:text="📚 Lihat Mata Kuliah"
                 app:cornerRadius="5dp"
                 app:backgroundTint="#1E3A8A"
                 android:textColor="#FFFFFF"
-                android:layout_marginBottom="24dp" />
+                android:layout_marginBottom="12dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"

@@ -7,5 +7,4 @@ data class Matakuliah(
     val sks: Int = 0,
     val semester: Int = 1,
     val dosenId: String = "",
-    val jadwal: String = ""    // tambahkan ini
 )
