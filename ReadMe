@@ -1,0 +1,207 @@
+{
+  "dosens": {
+    "67000": {
+      "department": "Teknik Informatika",
+      "id": "67000",
+      "nama": "Budi",
+      "nidn": "67123"
+    },
+    "67001": {
+      "department": "Teknik Informatika",
+      "id": "67001",
+      "nama": "Sari",
+      "nidn": "67234"
+    },
+    "67002": {
+      "department": "Teknik Informatika",
+      "id": "67002",
+      "nama": "Robertus",
+      "nidn": "67345"
+    }
+  },
+  "jadwals": {
+    "jadwal1": {
+      "dosenId": "67001",
+      "hari": "Senin",
+      "id": "jadwal1",
+      "jam": "08:00 - 10:00",
+      "matakuliahId": "IF101",
+      "namaMatakuliah": "Pemrograman Dasar",
+      "ruangan": "Lab 1"
+    },
+    "jadwal2": {
+      "dosenId": "67002",
+      "hari": "Rabu",
+      "id": "jadwal2",
+      "jam": "10:00 - 12:00",
+      "matakuliahId": "IF202",
+      "namaMatakuliah": "Struktur Data",
+      "ruangan": "Ruang 202"
+    },
+    "jadwal_IF102": {
+      "dosenId": "67001",
+      "hari": "-",
+      "id": "jadwal_IF102",
+      "jam": "-",
+      "matakuliahId": "IF102",
+      "namaMatakuliah": "Matematika Diskrit",
+      "ruangan": "-"
+    }
+  },
+  "kaprodis": {
+    "67000": {
+      "department": "Teknik Informatika",
+      "id": "67000",
+      "nama": "Pak Kaprodi",
+      "nidn": "67000"
+    }
+  },
+  "kartustudis": {
+    "krs1": {
+      "id": "krs1",
+      "mahasiswaId": "672022007",
+      "matakuliahIds": [
+        "IF101",
+        "IF202"
+      ],
+      "nama": "Andrew Prasetya Kusuma",
+      "semester": 3
+    },
+    "krs2": {
+      "id": "krs2",
+      "mahasiswaId": "672023168",
+      "matakuliahIds": [
+        "IF101"
+      ],
+      "nama": "Delsya Alfaiga Rendeng",
+      "semester": 1
+    }
+  },
+  "mahasiswas": {
+    "672022007": {
+      "id": "672022007",
+      "ipk": 3.75,
+      "krsId": "krs1",
+      "nim": "672022007",
+      "prodi": "Teknik Informatika",
+      "semester": 3,
+      "sksMaks": 20,
+      "sksTotal": 110,
+      "status": "Aktif"
+    },
+    "672023168": {
+      "id": "672023168",
+      "ipk": 4,
+      "krsId": "krs2",
+      "nim": "672023168",
+      "prodi": "Teknik Informatika",
+      "semester": 3,
+      "sksMaks": 20,
+      "sksTotal": 90,
+      "status": "Aktif"
+    }
+  },
+  "matakuliahs": {
+    "IF101": {
+      "dosenId": "67001",
+      "id": "IF101",
+      "kode": "IF101",
+      "nama": "Pemrograman Dasar",
+      "semester": 1,
+      "sks": 3
+    },
+    "IF102": {
+      "dosenId": "67001",
+      "id": "IF102",
+      "kode": "IF102",
+      "nama": "Matematika Diskrit",
+      "semester": 1,
+      "sks": 2
+    },
+    "IF202": {
+      "dosenId": "67002",
+      "id": "IF202",
+      "kode": "IF202",
+      "nama": "Struktur Data",
+      "semester": 3,
+      "sks": 3
+    }
+  },
+  "nilais": {
+    "-OUkBRn2EYew9E2xd8sa": {
+      "id": "-OUkBRn2EYew9E2xd8sa",
+      "mahasiswaId": "672022007",
+      "matakuliahId": "IF101",
+      "nilai": 4
+    },
+    "-OUkBTLzg-LN_by6dPr5": {
+      "id": "-OUkBTLzg-LN_by6dPr5",
+      "mahasiswaId": "672023168",
+      "matakuliahId": "IF101",
+      "nilai": 3
+    },
+    "-OUkBkFXMMn2LidXemWC": {
+      "id": "-OUkBkFXMMn2LidXemWC",
+      "mahasiswaId": "672022007",
+      "matakuliahId": "IF202",
+      "nilai": 4
+    },
+    "-OUkNXkH9OEuLN0mqkVL": {
+      "id": "-OUkNXkH9OEuLN0mqkVL",
+      "mahasiswaId": "Andrew Prasetya Kusuma",
+      "matakuliahId": "IF101",
+      "nilai": 2.5
+    }
+  },
+  "transkrips": {
+    "transkrip1": {
+      "id": "transkrip1",
+      "ipSemester": 3.6,
+      "mahasiswaId": "672022007",
+      "semester": 1
+    },
+    "transkrip3": {
+      "id": "transkrip3",
+      "ipSemester": 3.6,
+      "mahasiswaId": "672023168",
+      "semester": 1
+    }
+  },
+  "users": {
+    "67000": {
+      "id": "67000",
+      "nama": "Kaprodi",
+      "password": "kaprodi123",
+      "role": "kaprodi",
+      "username": "67000"
+    },
+    "67001": {
+      "id": "67001",
+      "nama": "Sari",
+      "password": "dosen123",
+      "role": "dosen",
+      "username": "67001"
+    },
+    "67002": {
+      "id": "67002",
+      "nama": "Budi",
+      "password": "dosen456",
+      "role": "dosen",
+      "username": "67002"
+    },
+    "672022007": {
+      "id": "672022007",
+      "nama": "Andrew Prasetya",
+      "password": "672022007",
+      "role": "mahasiswa",
+      "username": "672022007"
+    },
+    "672023168": {
+      "id": "672023168",
+      "nama": "Delsya Alfaiga",
+      "password": "672023168",
+      "role": "mahasiswa",
+      "username": "672023168"
+    }
+  }
+}
